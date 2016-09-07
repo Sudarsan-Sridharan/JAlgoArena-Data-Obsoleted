@@ -1,0 +1,118 @@
+body {
+    padding-top: 70px;
+}
+
+body, p, button {
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+}
+
+.navbar-default {
+    background-color: white;
+}
+
+.panel-heading span {
+    margin-top: -17px;
+    font-size: 15px;
+}
+
+hr.star-light:after {
+    background-color: #18BC9C;
+    color: white;
+}
+
+hr.star-light:after {
+    content: "\f005";
+    font-family: FontAwesome;
+    display: inline-block;
+    position: relative;
+    top: -.8em;
+    font-size: 2em;
+    padding: 0 .25em;
+}
+
+.btn-outline {
+    color: #fff;
+    font-size: 20px;
+    border: 2px solid #fff;
+    background: 0 0;
+    transition: all .3s ease-in-out;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.btn-outline:hover,
+.btn-outline:focus,
+.btn-outline:active,
+.btn-outline.active {
+    color: #18BC9C;
+    background: white;
+    border: solid 2px white;
+}
+
+.modal-container {
+    position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+    position: absolute;
+}
+
+#menu > .active > a {
+    color: #4078c0;
+    background-color: whitesmoke;
+}
+#menu > li > a:hover {
+    color: #4078c0
+}
+
+.problems-filter-enter {
+    opacity: 0.01;
+}
+
+.problems-filter-enter.problems-filter-enter-active {
+    opacity: 1;
+    transition: opacity 600ms ease-in;
+}
+
+.problems-filter-leave {
+    opacity: 1;
+}
+
+.problems-filter-leave.problems-filter-leave-active {
+    opacity: 0.01;
+    transition: opacity 600ms ease-in;
+}
+
+.pulse-button {
+    box-shadow: 0 0 0 0 rgba(92,184,92, 0.7);
+    -webkit-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+    -moz-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+    -ms-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+    animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+.pulse-button:hover
+{
+    -webkit-animation: none;-moz-animation: none;-ms-animation: none;animation: none;
+}
+
+@-webkit-keyframes pulse {to {box-shadow: 0 0 0 25px rgba(92,184,92, 0);}}
+@-moz-keyframes pulse {to {box-shadow: 0 0 0 25px rgba(92,184,92, 0);}}
+@-ms-keyframes pulse {to {box-shadow: 0 0 0 25px rgba(92,184,92, 0);}}
+@keyframes pulse {to {box-shadow: 0 0 0 25px rgba(92,184,92, 0);}}
+
+.ace_editor.fullScreen {
+    height: auto;
+    width: auto;
+    border: 0;
+    margin: 70px 0 0;
+    position: fixed !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.fullScreen {
+    overflow: hidden
+}
