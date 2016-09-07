@@ -4,3 +4,10 @@ node_js:
 branches:
   only:
   - master
+deploy:
+  provider: heroku
+  api_key:
+    secure: FmcmZN45ghyDRFKlkorfmah0ag0QAkE+15ubChfJB+ssq2Y3XgKIcruNjoAWUm7wvvU1DQqF0qUL5MoZG95Vo+bd7buwfHshPxl28ekT0NTXdQpd8wvYQnSpH5/1WWX1JIRGG9JpUVN6rYwq0AEFoMzN+kn22P6PJPahuYxbIt4tH/hoaQcCMcTZlGeWk8DaIgBbid5kMwUQQQgulIPN86T0gO21Chr0iAkGH1jmwVpiItN/246dezeZ6BLSkguDAh+Q6ZYk/bM3le8nNg/eL0iZ+g85vfNT0PjVKkgkcDXSVDpN9jeI+lUnp3SVWRCtJqRIytlFkEbYtIn/+MyyKdQ4WAEBEQPBizhXv2xQuP+4C+jgdcEC5ZSUueXspjoaKM0hOBdW2Zbfw+f2KkjCVV92M0ypvaJgxAigPd6Uvs5Gb3xc3NlcGRgv98gUT4GfnxnsYZpcNFPHT3ORGKeYpIkEGw/hfnaSAMpBH49IgEP4eQAjkZALXmcmo30Gq8/J+dNcUrKJVe2MMUoqct+IIazgbz8gUD4SQSYl1EVZI/Fyb/E6uAXvfHWlXUBQPiDLK+Sw2pkWFZ7T+x/+CwD3IAu8xxDIdw/8APsw8dQeHpy8qqVH9Jpr2vTui04sCHGmPX3tcYzp11RemthpaRNF48CN5vzh+bFN03uJ+AOV/9Q=
+  app: jalgoarena-data
+  on:
+    repo: spolnik/JAlgoArena-Data
