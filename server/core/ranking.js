@@ -80,6 +80,10 @@ function score(userSubmissions) {
 function problemRanking(users, submissions) {
     var ranking = [];
 
+    var bonusPointsForFastestSolution = calculateBonusPointsForFastestSolutions(
+        submissions, users
+    );
+
     _.forEach(submissions, function (submission) {
         var user = users.filter(function (user) {
             return user._id === submission.userId
@@ -87,7 +91,11 @@ function problemRanking(users, submissions) {
 
         if (user) {
             var username = user[0].username;
-            ranking.push({hacker: username, score: score([submission]), elapsed_time: submission.elapsed_time});
+            ranking.push({
+                hacker: username,
+                score: score([submission]) + bonusPointsForFastestSolution[user[0]._id],
+                elapsed_time: submission.elapsed_time
+            });
         }
     });
 
