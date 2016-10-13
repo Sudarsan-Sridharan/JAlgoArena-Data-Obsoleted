@@ -1,7 +1,34 @@
 var _ = require('lodash');
 
+var calculateBonusPointsForFastestSolutions = function (submissions, users) {
+    var bonusPointsForFastestSolution = {};
+    var problems = _.uniq(_.map(function(submission) {
+        return submission.problemId
+    }));
+
+    _.forEach(users, function (user) {
+        bonusPointsForFastestSolution[user._id] = 0;
+    });
+
+    _.forEach(problems, function (problem) {
+        var problemSubmissions = _.filter(submissions, function (submission) {
+            return submission.problemId === problem.id;
+        });
+
+        var fastestSubmission = _.minBy(problemSubmissions, 'elapsed_time');
+
+        bonusPointsForFastestSolution[fastestSubmission.userId] = bonusPointsForFastestSolution[fastestSubmission.userId] + 1;
+    });
+
+    return bonusPointsForFastestSolution;
+};
+
 function ranking(users, submissions) {
     var ranking = [];
+
+    var bonusPointsForFastestSolution = calculateBonusPointsForFastestSolutions(
+        submissions, users
+    );
 
     _.forEach(users, function (user) {
         var userSubmissions = _.filter(submissions, function (submission) {
@@ -13,30 +40,11 @@ function ranking(users, submissions) {
         });
 
         ranking.push(
-            rankEntry(user.username, score(userSubmissions), solvedProblems)
+            rankEntry(user.username, score(userSubmissions) + bonusPointsForFastestSolution[user._id], solvedProblems)
         );
     });
 
     return _.orderBy(ranking, ['score'], ['desc']);
-}
-
-function problemRanking(users, submissions, logger) {
-    var ranking = [];
-
-    _.forEach(submissions, function (submission) {
-        var user = users.filter(function (user) {
-            return user._id === submission.userId
-        });
-
-        if (user) {
-            var username = user[0].username;
-            ranking.push({hacker: username, score: score([submission]), elapsed_time: submission.elapsed_time});
-        } else {
-            logger.error('User does not exist: ' + submission.userId);
-        }
-    });
-
-    return _.orderBy(ranking, ['elapsed_time']);
 }
 
 function score(userSubmissions) {
@@ -65,6 +73,23 @@ function score(userSubmissions) {
     return _.sumBy(uniqueProblems, function(problem) {
         return problem.level * timeFactor(problem.elapsed_time);
     });
+}
+
+function problemRanking(users, submissions) {
+    var ranking = [];
+
+    _.forEach(submissions, function (submission) {
+        var user = users.filter(function (user) {
+            return user._id === submission.userId
+        });
+
+        if (user) {
+            var username = user[0].username;
+            ranking.push({hacker: username, score: score([submission]), elapsed_time: submission.elapsed_time});
+        }
+    });
+
+    return _.orderBy(ranking, ['elapsed_time']);
 }
 
 function rankEntry(userName, score, solvedProblems) {
