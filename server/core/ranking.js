@@ -2,7 +2,7 @@ var _ = require('lodash');
 
 var calculateBonusPointsForFastestSolutions = function (submissions, users) {
     var bonusPointsForFastestSolution = {};
-    var problems = _.uniq(_.map(function(submission) {
+    var problems = _.uniq(_.map(submissions, function(submission) {
         return submission.problemId
     }));
 
@@ -12,12 +12,14 @@ var calculateBonusPointsForFastestSolutions = function (submissions, users) {
 
     _.forEach(problems, function (problem) {
         var problemSubmissions = _.filter(submissions, function (submission) {
-            return submission.problemId === problem.id;
+            return submission.problemId === problem;
         });
 
         var fastestSubmission = _.minBy(problemSubmissions, 'elapsed_time');
 
-        bonusPointsForFastestSolution[fastestSubmission.userId] = bonusPointsForFastestSolution[fastestSubmission.userId] + 1;
+        if (fastestSubmission) {
+            bonusPointsForFastestSolution[fastestSubmission.userId] = bonusPointsForFastestSolution[fastestSubmission.userId] + 1;
+        }
     });
 
     return bonusPointsForFastestSolution;

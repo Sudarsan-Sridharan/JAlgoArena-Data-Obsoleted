@@ -64,21 +64,21 @@ describe('Ranking', function() {
         });
     });
 
-    it('should return 25 points for 2 problems solved, 1 easy solved in 15 ms, and 1 mid solved in 0 ms', function() {
+    it('should return 27 points for 2 problems solved, 1 easy solved in 15 ms, and 1 mid solved in 0 ms', function() {
         var ranking = require('../../server/core/ranking.js').ranking;
         var submissions = [_.assign({}, submission, {level: 2, elapsed_time: 0, problemId: 'a'}), _.assign({}, submission, {level: 1, elapsed_time: 15.0})];
         var users = [{_id: submission.userId, username: 'dummy'}];
 
         var points = ranking(users, submissions)[0].score;
-        expect(points).to.equal(25);
+        expect(points).to.equal(27);
     });
 
-    it('should return 3 points for twice solved easy problem considering last result, 1 solved in 155 ms, and another solved in 0 ms', function() {
+    it('should return 4 points for twice solved easy problem considering last result, 1 solved in 155 ms, and another solved in 0 ms, plus bonus point for fastest solution', function() {
         var ranking = require('../../server/core/ranking.js').ranking;
         var submissions = [_.assign({}, submission, {elapsed_time: 155.0}), _.assign({}, submission, {elapsed_time: 0})];
         var users = [{_id: submission.userId, username: 'dummy'}];
 
         var points = ranking(users, submissions)[0].score;
-        expect(points).to.equal(3);
+        expect(points).to.equal(4);
     });
 });
