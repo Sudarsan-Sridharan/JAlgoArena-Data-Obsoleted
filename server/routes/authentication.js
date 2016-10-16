@@ -39,7 +39,8 @@ module.exports = function(app, passport) {
         if (user) return res.json({
             username: req.user.username,
             id: req.user.id,
-            email: req.user.email
+            email: req.user.email,
+            isAdmin: req.user.isAdmin
         });
         return res.json({});
     });
