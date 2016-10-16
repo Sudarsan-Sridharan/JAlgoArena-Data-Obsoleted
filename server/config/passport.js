@@ -93,7 +93,8 @@ module.exports = function(app, passport, userDb) {
                         var userObject  = {
                             id: doc._id,
                             email: doc.email,
-                            username: doc.username
+                            username: doc.username,
+                            isAdmin: doc.isAdmin
                         };
                         return done(null, userObject);
                     }
@@ -121,7 +122,8 @@ module.exports = function(app, passport, userDb) {
                         var userObject  = {
                             id: user._id,
                             email: user.email,
-                            username: user.username
+                            username: user.username,
+                            isAdmin: user.isAdmin
                         };
 
                         done(null, userObject);
