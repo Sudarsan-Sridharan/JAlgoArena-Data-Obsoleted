@@ -29,4 +29,12 @@ module.exports = function(app, submissionDb) {
             return res.json(docs);
         })
     });
+
+    app.get('/submissions/', function(req, res, next) {
+
+        submissionDb.find({}, function (err, docs) {
+            if (err) return next(err);
+            return res.json(docs);
+        })
+    });
 };
