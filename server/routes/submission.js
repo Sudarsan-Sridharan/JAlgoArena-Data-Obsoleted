@@ -50,10 +50,13 @@ module.exports = function(app, submissionDb, usersDb) {
             if (err) { return next(err); }
             if (!user || !user.isAdmin) { return res.json({}); }
 
-            submissionDb.remove({_id: submissionId}, {}, function (err, numRemoved) {
+            submissionDb.remove({_id: submissionId}, {}, function (err) {
                 if (err) return next(err);
                 console.log('Removed: ' + submissionId);
-                return res.json({numRemoved});
+                submissionDb.find({}, function (err, docs) {
+                    if (err) return next(err);
+                    return res.json(docs);
+                });
             });
         })(req, res, next);
     });
