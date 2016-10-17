@@ -21,7 +21,7 @@ module.exports = function(app, submissionDb) {
         );
     });
 
-    app.get('/submissions/:userId', function(req, res, next) {
+    app.get('/submissions/:userId', requireAuth, function(req, res, next) {
         var userId = req.params.userId;
 
         submissionDb.find({userId: userId}, function (err, docs) {
@@ -32,9 +32,14 @@ module.exports = function(app, submissionDb) {
 
     app.get('/submissions/', function(req, res, next) {
 
-        submissionDb.find({}, function (err, docs) {
-            if (err) return next(err);
-            return res.json(docs);
-        })
+        passport.authenticate('jwt', { session: false }, function(err, user) {
+            if (err) { return next(err); }
+            if (!user || !user.isAdmin) { return res.json({}); }
+
+            submissionDb.find({}, function (err, docs) {
+                if (err) return next(err);
+                return res.json(docs);
+            });
+        })(req, res, next);
     });
 };
