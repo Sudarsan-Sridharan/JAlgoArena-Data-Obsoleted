@@ -1,7 +1,7 @@
 var passport = require('passport');
 var requireAuth = passport.authenticate('jwt', { session: false });
 
-module.exports = function(app, submissionDb) {
+module.exports = function(app, submissionDb, usersDb) {
 
     app.post('/submissions', requireAuth, function(req, res, next) {
         var newSubmission = req.body;
@@ -40,6 +40,21 @@ module.exports = function(app, submissionDb) {
                 if (err) return next(err);
                 return res.json(docs);
             });
+        })(req, res, next);
+    });
+
+    app.get('/users/', function(req, res, next) {
+
+        passport.authenticate('jwt', { session: false }, function(err, user) {
+            if (err) { return next(err); }
+            if (!user || !user.isAdmin) { return res.json({}); }
+
+            usersDb.find({},
+                {password: 0},
+                function (err, docs) {
+                    if (err) return next(err);
+                    return res.json(docs);
+                });
         })(req, res, next);
     });
 };
