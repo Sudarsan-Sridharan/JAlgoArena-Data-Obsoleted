@@ -43,6 +43,21 @@ module.exports = function(app, submissionDb, usersDb) {
         })(req, res, next);
     });
 
+    app.post('/submissions/delete/:submissionId', function(req, res, next) {
+        var submissionId = req.params.submissionId;
+
+        passport.authenticate('jwt', { session: false }, function(err, user) {
+            if (err) { return next(err); }
+            if (!user || !user.isAdmin) { return res.json({}); }
+
+            submissionDb.remove({_id: submissionId}, {}, function (err, numRemoved) {
+                if (err) return next(err);
+                console.log('Removed: ' + submissionId);
+                return res.json({numRemoved});
+            });
+        })(req, res, next);
+    });
+
     app.get('/users/', function(req, res, next) {
 
         passport.authenticate('jwt', { session: false }, function(err, user) {
