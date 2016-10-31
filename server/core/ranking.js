@@ -42,7 +42,7 @@ function ranking(users, submissions) {
         });
 
         ranking.push(
-            rankEntry(user.username, score(userSubmissions) + bonusPointsForFastestSolution[user._id], solvedProblems)
+            rankEntry(user, score(userSubmissions) + bonusPointsForFastestSolution[user._id], solvedProblems)
         );
     });
 
@@ -102,11 +102,13 @@ function problemRanking(users, submissions) {
     return _.orderBy(ranking, ['elapsed_time']);
 }
 
-function rankEntry(userName, score, solvedProblems) {
+function rankEntry(user, score, solvedProblems) {
     return {
-        hacker: userName,
+        hacker: user.username,
         score,
-        solvedProblems
+        solvedProblems,
+        region: user.region,
+        team: user.team
     }
 }
 
