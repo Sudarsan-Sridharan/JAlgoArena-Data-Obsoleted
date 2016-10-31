@@ -40,7 +40,9 @@ module.exports = function(app, passport) {
             username: req.user.username,
             id: req.user.id,
             email: req.user.email,
-            isAdmin: req.user.isAdmin
+            isAdmin: req.user.isAdmin,
+            region: req.user.region,
+            team: req.user.team
         });
         return res.json({});
     });

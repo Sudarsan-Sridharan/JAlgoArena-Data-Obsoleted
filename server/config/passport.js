@@ -21,6 +21,8 @@ module.exports = function(app, passport, userDb) {
             },
             function(req, email, password, done) {
                 var username = req.body.username;
+                var region = req.body.region;
+                var team = req.body.team;
 
                 userDb.findOne({username: username}, function (err, doc) {
                     if (err) {
@@ -46,7 +48,9 @@ module.exports = function(app, passport, userDb) {
                                 var userInfo = {
                                     username: username,
                                     email: email,
-                                    password: passwordHash
+                                    password: passwordHash,
+                                    region: region,
+                                    team: team
                                 };
 
                                 userDb.insert(userInfo,
@@ -94,7 +98,9 @@ module.exports = function(app, passport, userDb) {
                             id: doc._id,
                             email: doc.email,
                             username: doc.username,
-                            isAdmin: doc.isAdmin
+                            isAdmin: doc.isAdmin,
+                            region: doc.region,
+                            team: doc.team
                         };
                         return done(null, userObject);
                     }
@@ -123,7 +129,9 @@ module.exports = function(app, passport, userDb) {
                             id: user._id,
                             email: user.email,
                             username: user.username,
-                            isAdmin: user.isAdmin
+                            isAdmin: user.isAdmin,
+                            region: user.region,
+                            team: user.team
                         };
 
                         done(null, userObject);
