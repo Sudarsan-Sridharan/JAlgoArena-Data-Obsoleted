@@ -35,4 +35,24 @@ module.exports = function(app, submissionDb, userDb, ranking, problemRanking, lo
             });
         })
     });
+
+    app.get('/ranking/:problemId/passRatio', function (req, res, next) {
+        submissionDb.find({problemId: req.params.problemId}, function (err, problemSubmissions) {
+            if (err) {
+                return next(err);
+            }
+
+            userDb.find({}, function(err, users) {
+                if (err) {
+                    return next(err);
+                }
+
+                try {
+                    res.json({'passedBy': problemSubmissions.length, 'usersCount': users.length});
+                } catch (err) {
+                    next(err);
+                }
+            });
+        })
+    });
 };
