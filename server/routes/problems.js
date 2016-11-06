@@ -3,19 +3,11 @@ module.exports = function(app, problemsDb) {
     app.get('/problems', function(req, res, next) {
         problemsDb.find(
             {},
-            {test_cases: 0},
             function (err, docs) {
                 if (err) return next(err);
                 return res.json(docs);
             }
         )
-    });
-
-    app.get('/problems/all', function(req, res, next) {
-        problemsDb.find({}, function (err, docs) {
-            if (err) return next(err);
-            return res.json(docs);
-        })
     });
 
     app.get('/problems/:problemId', function(req, res, next) {
