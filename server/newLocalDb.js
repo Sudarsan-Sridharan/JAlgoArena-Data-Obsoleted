@@ -1,8 +1,8 @@
 var Datastore = require('nedb');
 
 module.exports = function (filename, logger) {
-    var userDb = new Datastore({filename: filename, autoload: true});
-    userDb.loadDatabase(function (err) {
+    var db = new Datastore({filename: filename, autoload: true});
+    db.loadDatabase(function (err) {
         if (err) {
             logger.error(err);
         } else {
@@ -10,5 +10,5 @@ module.exports = function (filename, logger) {
         }
     });
 
-    return userDb;
+    return db;
 };
