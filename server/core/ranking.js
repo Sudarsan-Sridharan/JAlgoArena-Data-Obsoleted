@@ -73,7 +73,8 @@ function score(userSubmissions) {
     }
 
     return _.sumBy(uniqueProblems, function(problem) {
-        return problem.level * timeFactor(problem.elapsed_time);
+        var languageFactor = problem.language === 'kotlin' ? 1.5 : 1.0;
+        return problem.level * timeFactor(problem.elapsed_time) * languageFactor;
     });
 }
 
