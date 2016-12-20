@@ -1,3 +1,6 @@
+var passport = require('passport');
+var requireAuth = passport.authenticate('jwt', { session: false });
+
 module.exports = function(app, problemsDb) {
 
     app.get('/problems', function(req, res, next) {
@@ -17,5 +20,23 @@ module.exports = function(app, problemsDb) {
             if (err) return next(err);
             return res.json(problem);
         })
+    });
+
+    app.post('/problems/new', requireAuth, function(req, res, next) {
+        var newProblem = req.body;
+
+        problemsDb.update(
+            {id: newProblem.id},
+            newProblem,
+            {upsert: true},
+            function (err) {
+                if (err) return next(err);
+
+                newProblem.findOne({id: newProblem.id}, function (err, problem) {
+                    if (err) return next(err);
+                    return res.json(problem);
+                });
+            }
+        );
     });
 };
