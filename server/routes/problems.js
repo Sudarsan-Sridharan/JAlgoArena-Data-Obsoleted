@@ -32,7 +32,7 @@ module.exports = function(app, problemsDb) {
             function (err) {
                 if (err) return next(err);
 
-                newProblem.findOne({id: newProblem.id}, function (err, problem) {
+                problemsDb.findOne({id: newProblem.id}, function (err, problem) {
                     if (err) return next(err);
                     return res.json(problem);
                 });
