@@ -32,9 +32,8 @@ require('./server/config/passport.js')(app, passport, userDb);
 var ranking = require('./server/core/ranking.js').ranking;
 var problemRanking = require('./server/core/ranking').problemRanking;
 var submissionDb = require('./server/newLocalDb.js')('submissions.db', logger);
-var problemsDb = require('./server/newLocalDb.js')('problems.db', logger);
 
-require('./server/routes/index')(app, passport, submissionDb, userDb, problemsDb, ranking, problemRanking, logger);
+require('./server/routes/index')(app, passport, submissionDb, userDb, ranking, problemRanking, logger);
 
 logger.debug('Configuring: ' + env);
 
